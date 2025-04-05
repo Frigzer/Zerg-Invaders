@@ -1,0 +1,27 @@
+# === SYSTEM ===
+.DS_Store
+Thumbs.db
+
+# === BUILD FILES ===
+*.exe
+*.out
+*.o
+*.obj
+*.pdb
+*.ilk
+*.idb
+*.log
+
+# === IDEs ===
+.vscode/
+*.sdf
+*.opensdf
+*.suo
+*.user
+*.vcxproj.*
+CMakeFiles/
+CMakeCache.txt
+build/
+
+# === USER DATA ===
+ZergInvaders/Leaderboard/wyniki.txt
