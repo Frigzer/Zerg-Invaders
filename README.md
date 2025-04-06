@@ -2,7 +2,11 @@
 
 Zerg Invaders is a 2D space shooter game inspired by the classic *Space Invaders* and the *StarCraft* universe. Players control a spaceship and fight off waves of alien enemies resembling iconic Zerg units.
 
+![Main menu](media/main_menu.png)
+
 ## 🎮 Gameplay
+
+![Gameplay demo](media/demo.gif)
 
 - **Controls**: Move left and right, shoot to eliminate enemies. Controls can be customized via presets.
 - **Enemies**:
@@ -51,6 +55,7 @@ It can be used for local builds, especially on Windows without installing SFML s
 
 ```
 📦 Zerg-Invaders/
+ ┣ 📂media/  
  ┣ 📂External/  
  ┃ ┣ 📂include/SFML/... – SFML headers  
  ┃ ┗ 📂lib/ – SFML static/dynamic libraries  
@@ -71,8 +76,7 @@ It can be used for local builds, especially on Windows without installing SFML s
  ┃ ┣ 📜settings.cpp / settings.h  
  ┃ ┣ 📜window.cpp / window.h  
  ┃ ┣ 📜StringCrypter.cpp / StringCrypter.h – score encryption logic  
- ┃ ┣ 📜*.dll – required SFML dynamic libraries (for Windows builds)  
- ┃ ┗ 📜README.md  
+ ┃ ┣ 📜*.dll – required SFML dynamic libraries (for Windows builds)   
  ┗ 📜README.md – this file
 ```
 
