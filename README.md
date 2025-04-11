@@ -29,21 +29,32 @@ Zerg Invaders is a 2D space shooter game inspired by the classic *Space Invaders
 
 ## 🛠️ Installation and Running
 
-### Option 1: Visual Studio (Windows)
+### Option 1: Download release (recommended)
 
-The project includes a Visual Studio solution. To build:
+1. Go to the [Releases](https://github.com/Frigzer/Zerg-Invaders/releases) page
+2. Download the latest `.zip` file
+3. Unzip it anywhere
+4. Run `ZergInvaders.exe`
+
+No installation required – all DLLs are included.
+
+---
+
+### Option 2: Build from source (for developers)
 
 1. Clone the repository:
 
    ```bash
    git clone https://github.com/Frigzer/Zerg-Invaders.git
-   ```
+2. Open the .sln file in Visual Studio.
 
-2. Open the `.sln` file in Visual Studio.
-3. Make sure SFML (from `External/`) is properly linked:
-    - `External/include` → Header files
-    - `External/lib` → Library files
-4. Build and run using Debug or Release configuration.
+2. Make sure SFML (from External/) is properly linked:
+
+- External/include → Header files
+
+- External/lib → Library files
+
+4. Build and run using Release or Debug configuration.
 
 ---
 
@@ -94,3 +105,11 @@ It was my first real experience with both object-oriented programming and the SF
 
 This project is for educational and personal use only.
 All StarCraft-related assets (visuals, sounds) are property of Blizzard Entertainment and are used here under fair use for non-commercial purposes.
+
+---
+
+## 🧩 Patch notes
+
+🟢 v1.0.1 (Bugfix)
+- Fixed crash when removing bullets/enemies
+- Bullets no longer carry between levels
