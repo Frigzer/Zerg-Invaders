@@ -205,24 +205,28 @@ Game::~Game()
 	{
 		delete i.second;
 	}
+	textures.clear();
 
 	//Usuwanie pocisków gracza
 	for (auto* i : playerBullets)
 	{
 		delete i;
 	}
+	playerBullets.clear();
 
 	//Usuwanie pocisków przeciwników
 	for (auto* i : enemyBullets)
 	{
 		delete i;
 	}
+	enemyBullets.clear();
 
 	//Usuwanie przeciwników
 	for (auto* i : enemies)
 	{
 		delete i;
 	}
+	enemies.clear();
 
 	//Usuwanie królowej
 	delete queen;
@@ -380,33 +384,36 @@ void Game::updatePlayerCollision(float width, float height)
 
 void Game::updateBullets(float width, float height)
 {
-	//Usuwanie pocisków gracza
-	unsigned counter = 0;
-	for (auto* bullet : playerBullets)
+	// Usuwanie pocisków gracza
+	for (auto bullet = playerBullets.begin(); bullet != playerBullets.end(); )
 	{
-		bullet->update();
+		(*bullet)->update();
 
-		
-		if (bullet->getBounds().top + bullet->getBounds().height < 0.f)
+		if ((*bullet)->getBounds().top + (*bullet)->getBounds().height < 0.f)
 		{
-			delete playerBullets.at(counter);
-			playerBullets.erase(playerBullets.begin() + counter);
+			delete* bullet;
+			bullet = playerBullets.erase(bullet);
 		}
-		++counter;
+		else
+		{
+			++bullet;
+		}
 	}
 
-	//Usuwanie pocisków przeciwników
-	counter = 0;
-	for (auto* bullet : enemyBullets)
+	// Usuwanie pocisków przeciwników
+	for (auto bullet = enemyBullets.begin(); bullet != enemyBullets.end(); )
 	{
-		bullet->update();
+		(*bullet)->update();
 
-		if (bullet->getBounds().top > height)
+		if ((*bullet)->getBounds().top > height)
 		{
-			delete enemyBullets.at(counter);
-			enemyBullets.erase(enemyBullets.begin() + counter);
+			delete* bullet;
+			bullet = enemyBullets.erase(bullet);
 		}
-		++counter;
+		else
+		{
+			++bullet;
+		}
 	}
 }
 
@@ -569,6 +576,20 @@ void Game::update(float width, float height)
 
 	if (enemies.size() == 0 && loadLoadingScreen)
 	{
+		//Usuwanie pocisków gracza
+		for (auto* i : playerBullets)
+		{
+			delete i;
+		}
+		playerBullets.clear();
+
+		//Usuwanie pocisków przeciwników
+		for (auto* i : enemyBullets)
+		{
+			delete i;
+		}
+		enemyBullets.clear();
+
 		spawnEnemies(width, height);
 		loadLoadingScreen = false;
 	}
