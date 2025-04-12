@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <map>
 
 #include <iostream>
 
@@ -35,6 +36,9 @@ private:
 	//Tekst w ustawieniach
 	sf::Text choose[MAX_NUMBER_OF_OPTIONS];
 
+	//Mapowanie przycisków
+	std::map<std::string, sf::Keyboard::Key> keyMap;
+
 	//Ruch w lewo
 	sf::Keyboard::Key goLeft;
 
@@ -46,6 +50,12 @@ private:
 
 	//Inicjalizacja sterowania
 	void initControls();
+
+	//Zamiana sf::Keyboard::Key na std::string
+	std::string keyToString(sf::Keyboard::Key key);
+
+	//Zapisuje nowy przycisk do pliku
+	void saveKeyToFile(const std::string& filename, sf::Keyboard::Key key);
 
 public:
 

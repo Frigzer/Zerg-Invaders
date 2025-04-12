@@ -2,9 +2,65 @@
 
 void Settings::initControls()
 {
-	goLeft = sf::Keyboard::A;
-	goRight = sf::Keyboard::D;
-	shoot = sf::Keyboard::Space;
+	//Mapowanie przycisków
+	keyMap = {
+		{"A", sf::Keyboard::A},
+		{"D", sf::Keyboard::D},
+		{"W", sf::Keyboard::W},
+		{"S", sf::Keyboard::S},
+		{"Space", sf::Keyboard::Space},
+		{"Left", sf::Keyboard::Left},
+		{"Right", sf::Keyboard::Right},
+		{"Up", sf::Keyboard::Up},
+		{"Down", sf::Keyboard::Down},
+		{"Enter", sf::Keyboard::Enter},
+		{"Escape", sf::Keyboard::Escape}
+	};
+
+	//Wczytywanie przycisków z plików
+	auto readKey = [&](const std::string& filename) -> sf::Keyboard::Key {
+		std::ifstream file(filename);
+		std::string keyName;
+		if (file >> keyName && keyMap.find(keyName) != keyMap.end()) {
+			return keyMap[keyName];
+		}
+		else {
+			std::cout << "!ERROR::SETTINGS::INITCONTROLS::Invalid or missing key in " << filename << ", using default\n";
+			return sf::Keyboard::Unknown;
+		}
+		};
+
+	goLeft = readKey("Config/left.txt");
+	goRight = readKey("Config/right.txt");
+	shoot = readKey("Config/shoot.txt");
+
+	if (goLeft == sf::Keyboard::Unknown)  goLeft = sf::Keyboard::A;
+	if (goRight == sf::Keyboard::Unknown) goRight = sf::Keyboard::D;
+	if (shoot == sf::Keyboard::Unknown)   shoot = sf::Keyboard::Space;
+}
+
+std::string Settings::keyToString(sf::Keyboard::Key key)
+{
+	switch (key)
+	{
+	case sf::Keyboard::A: return "A";
+	case sf::Keyboard::D: return "D";
+	case sf::Keyboard::W: return "W";
+	case sf::Keyboard::Space: return "Space";
+	case sf::Keyboard::Left: return "Left";
+	case sf::Keyboard::Right: return "Right";
+	case sf::Keyboard::Up: return "Up";
+	case sf::Keyboard::Enter: return "Enter";
+	case sf::Keyboard::Escape: return "Escape";
+	default: return "Unknown";
+	}
+}
+
+void Settings::saveKeyToFile(const std::string& filename, sf::Keyboard::Key key)
+{
+	std::ofstream file(filename);
+	if (file.is_open())
+		file << keyToString(key);
 }
 
 Settings::Settings()
@@ -15,11 +71,11 @@ Settings::Settings(float width, float height)
 {
 	if (!font.loadFromFile("Fonts/RubikBubbles-Regular.ttf"))
 	{
-		std::cout << "!ERROR::MENU::MENU::Nie udalo sie wczytac czcionki" << std::endl;
+		std::cout << "!ERROR::SETTINGS::SETTINGS::Nie udalo sie wczytac czcionki" << std::endl;
 	}
 
 	if (!backgroundTexture.loadFromFile("Textures/menu_background_1.jpg"))
-		std::cout << "!ERROR::GAME::INITWORLD::Nie mozna zaladowac tla" << std::endl;
+		std::cout << "!ERROR::SETTINGS::SETTINGS::Nie mozna zaladowac tla" << std::endl;
 
 	background.setTexture(backgroundTexture);
 
@@ -27,8 +83,14 @@ Settings::Settings(float width, float height)
 
 	//Move Left: A
 	choose[0].setFont(font);
-	choose[0].setFillColor(sf::Color::Blue);
-	choose[0].setOutlineColor(sf::Color::Black);
+	if (goLeft == sf::Keyboard::A) {
+		choose[0].setFillColor(sf::Color::Blue);
+		choose[0].setOutlineColor(sf::Color::Black);
+	}
+	else {
+		choose[0].setFillColor(sf::Color::Blue);
+		choose[0].setOutlineColor(sf::Color::Red);
+	}
 	choose[0].setOutlineThickness(2);
 	choose[0].setString("Move Left: A");
 	choose[0].setCharacterSize(30);
@@ -37,8 +99,14 @@ Settings::Settings(float width, float height)
 
 	//Move Left: LeftButton
 	choose[1].setFont(font);
-	choose[1].setFillColor(sf::Color::White);
-	choose[1].setOutlineColor(sf::Color::Red);
+	if (goLeft == sf::Keyboard::Left) {
+		choose[1].setFillColor(sf::Color::White);
+		choose[1].setOutlineColor(sf::Color::Black);
+	}
+	else {
+		choose[1].setFillColor(sf::Color::White);
+		choose[1].setOutlineColor(sf::Color::Red);
+	}
 	choose[1].setOutlineThickness(2);
 	choose[1].setString("Move Left: LeftButton");
 	choose[1].setCharacterSize(30);
@@ -46,8 +114,14 @@ Settings::Settings(float width, float height)
 
 	//Move Right: D
 	choose[2].setFont(font);
-	choose[2].setFillColor(sf::Color::White);
-	choose[2].setOutlineColor(sf::Color::Black);
+	if (goRight == sf::Keyboard::D) {
+		choose[2].setFillColor(sf::Color::White);
+		choose[2].setOutlineColor(sf::Color::Black);
+	}
+	else {
+		choose[2].setFillColor(sf::Color::White);
+		choose[2].setOutlineColor(sf::Color::Red);
+	}
 	choose[2].setOutlineThickness(2);
 	choose[2].setString("Move Right: D");
 	choose[2].setCharacterSize(30);
@@ -55,8 +129,14 @@ Settings::Settings(float width, float height)
 
 	//Move Right: RightButton
 	choose[3].setFont(font);
-	choose[3].setFillColor(sf::Color::White);
-	choose[3].setOutlineColor(sf::Color::Red);
+	if (goRight == sf::Keyboard::Right) {
+		choose[3].setFillColor(sf::Color::White);
+		choose[3].setOutlineColor(sf::Color::Black);
+	}
+	else {
+		choose[3].setFillColor(sf::Color::White);
+		choose[3].setOutlineColor(sf::Color::Red);
+	}
 	choose[3].setOutlineThickness(2);
 	choose[3].setString("Move Right: RightButton");
 	choose[3].setCharacterSize(30);
@@ -64,8 +144,14 @@ Settings::Settings(float width, float height)
 
 	//Shoot: spacebar
 	choose[4].setFont(font);
-	choose[4].setFillColor(sf::Color::White);
-	choose[4].setOutlineColor(sf::Color::Black);
+	if (shoot == sf::Keyboard::Space) {
+		choose[4].setFillColor(sf::Color::White);
+		choose[4].setOutlineColor(sf::Color::Black);
+	}
+	else {
+		choose[4].setFillColor(sf::Color::White);
+		choose[4].setOutlineColor(sf::Color::Red);
+	}
 	choose[4].setOutlineThickness(2);
 	choose[4].setString("Shoot: spacebar");
 	choose[4].setCharacterSize(30);
@@ -73,8 +159,14 @@ Settings::Settings(float width, float height)
 
 	//Shoot: W
 	choose[5].setFont(font);
-	choose[5].setFillColor(sf::Color::White);
-	choose[5].setOutlineColor(sf::Color::Red);
+	if (shoot == sf::Keyboard::W) {
+		choose[5].setFillColor(sf::Color::White);
+		choose[5].setOutlineColor(sf::Color::Black);
+	}
+	else {
+		choose[5].setFillColor(sf::Color::White);
+		choose[5].setOutlineColor(sf::Color::Red);
+	}
 	choose[5].setOutlineThickness(2);
 	choose[5].setString("Shoot: W");
 	choose[5].setCharacterSize(30);
@@ -82,8 +174,14 @@ Settings::Settings(float width, float height)
 
 	//Shoot: UpButton
 	choose[6].setFont(font);
-	choose[6].setFillColor(sf::Color::White);
-	choose[6].setOutlineColor(sf::Color::Red);
+	if (shoot == sf::Keyboard::Up) {
+		choose[6].setFillColor(sf::Color::White);
+		choose[6].setOutlineColor(sf::Color::Black);
+	}
+	else {
+		choose[6].setFillColor(sf::Color::White);
+		choose[6].setOutlineColor(sf::Color::Red);
+	}
 	choose[6].setOutlineThickness(2);
 	choose[6].setString("Shoot: UpButton");
 	choose[6].setCharacterSize(30);
@@ -110,6 +208,8 @@ void Settings::setLeft(sf::Keyboard::Key key)
 		choose[0].setOutlineColor(sf::Color::Red);
 		choose[1].setOutlineColor(sf::Color::Black);
 	}
+
+	saveKeyToFile("Config/left.txt", goLeft);
 }
 
 void Settings::setRight(sf::Keyboard::Key key)
@@ -125,6 +225,8 @@ void Settings::setRight(sf::Keyboard::Key key)
 		choose[2].setOutlineColor(sf::Color::Red);
 		choose[3].setOutlineColor(sf::Color::Black);
 	}
+
+	saveKeyToFile("Config/right.txt", goRight);
 }
 
 void Settings::setShoot(sf::Keyboard::Key key)
@@ -148,6 +250,8 @@ void Settings::setShoot(sf::Keyboard::Key key)
 		choose[5].setOutlineColor(sf::Color::Red);
 		choose[6].setOutlineColor(sf::Color::Black);
 	}
+
+	saveKeyToFile("Config/shoot.txt", shoot);
 }
 
 sf::Keyboard::Key Settings::getLeft()
