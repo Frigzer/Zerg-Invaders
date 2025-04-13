@@ -14,7 +14,7 @@ Menu::Menu(float width, float height)
 	
 
 	if (!backgroundTexture.loadFromFile("Textures/menu_background_1.jpg"))
-		std::cout << "!ERROR::GAME::INITWORLD::Nie mozna zaladowac tla" << std::endl;
+		std::cout << "!ERROR::MENU::MENU::Nie mozna zaladowac tla" << std::endl;
 
 	background.setTexture(backgroundTexture);
 
