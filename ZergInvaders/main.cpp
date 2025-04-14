@@ -54,9 +54,9 @@ int main()
 	Settings settings(window.getWindow()->getSize().x, window.getWindow()->getSize().y);
 
 	//Domyœlne sterowanie
-	sf::Keyboard::Key goLeft = sf::Keyboard::A;
-	sf::Keyboard::Key goRight = sf::Keyboard::D;
-	sf::Keyboard::Key shoot = sf::Keyboard::Space;
+	sf::Keyboard::Key goLeft = settings.getLeft();
+	sf::Keyboard::Key goRight = settings.getRight();
+	sf::Keyboard::Key shoot = settings.getShoot();
 
 	//Pêtla dpowiedzialna za dzia³anie gry
 	while(window.getWindow()->isOpen())
