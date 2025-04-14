@@ -39,48 +39,8 @@ void Settings::initControls()
 	if (shoot == sf::Keyboard::Unknown)   shoot = sf::Keyboard::Space;
 }
 
-std::string Settings::keyToString(sf::Keyboard::Key key)
+void Settings::initSettingsUI(float width, float height)
 {
-	switch (key)
-	{
-	case sf::Keyboard::A: return "A";
-	case sf::Keyboard::D: return "D";
-	case sf::Keyboard::W: return "W";
-	case sf::Keyboard::Space: return "Space";
-	case sf::Keyboard::Left: return "Left";
-	case sf::Keyboard::Right: return "Right";
-	case sf::Keyboard::Up: return "Up";
-	case sf::Keyboard::Enter: return "Enter";
-	case sf::Keyboard::Escape: return "Escape";
-	default: return "Unknown";
-	}
-}
-
-void Settings::saveKeyToFile(const std::string& filename, sf::Keyboard::Key key)
-{
-	std::ofstream file(filename);
-	if (file.is_open())
-		file << keyToString(key);
-}
-
-Settings::Settings()
-{
-}
-
-Settings::Settings(float width, float height)
-{
-	if (!font.loadFromFile("Fonts/RubikBubbles-Regular.ttf"))
-	{
-		std::cout << "!ERROR::SETTINGS::SETTINGS::Nie udalo sie wczytac czcionki" << std::endl;
-	}
-
-	if (!backgroundTexture.loadFromFile("Textures/menu_background_1.jpg"))
-		std::cout << "!ERROR::SETTINGS::SETTINGS::Nie mozna zaladowac tla" << std::endl;
-
-	background.setTexture(backgroundTexture);
-
-	initControls();
-
 	//Move Left: A
 	choose[0].setFont(font);
 	if (goLeft == sf::Keyboard::A) {
@@ -94,7 +54,7 @@ Settings::Settings(float width, float height)
 	choose[0].setOutlineThickness(2);
 	choose[0].setString("Move Left: A");
 	choose[0].setCharacterSize(30);
-	choose[0].setPosition(sf::Vector2f(width / 2 - choose[0].getGlobalBounds().width/2, height / (MAX_NUMBER_OF_OPTIONS + 1) * 1));
+	choose[0].setPosition(sf::Vector2f(width / 2 - choose[0].getGlobalBounds().width / 2, height / (MAX_NUMBER_OF_OPTIONS + 1) * 1));
 
 
 	//Move Left: LeftButton
@@ -186,6 +146,51 @@ Settings::Settings(float width, float height)
 	choose[6].setString("Shoot: UpButton");
 	choose[6].setCharacterSize(30);
 	choose[6].setPosition(sf::Vector2f(width / 2 - choose[6].getGlobalBounds().width / 2, height / (MAX_NUMBER_OF_OPTIONS + 1) * 7));
+}
+
+std::string Settings::keyToString(sf::Keyboard::Key key)
+{
+	switch (key)
+	{
+	case sf::Keyboard::A: return "A";
+	case sf::Keyboard::D: return "D";
+	case sf::Keyboard::W: return "W";
+	case sf::Keyboard::Space: return "Space";
+	case sf::Keyboard::Left: return "Left";
+	case sf::Keyboard::Right: return "Right";
+	case sf::Keyboard::Up: return "Up";
+	case sf::Keyboard::Enter: return "Enter";
+	case sf::Keyboard::Escape: return "Escape";
+	default: return "Unknown";
+	}
+}
+
+void Settings::saveKeyToFile(const std::string& filename, sf::Keyboard::Key key)
+{
+	std::ofstream file(filename);
+	if (file.is_open())
+		file << keyToString(key);
+}
+
+Settings::Settings()
+{
+}
+
+Settings::Settings(float width, float height)
+{
+	if (!font.loadFromFile("Fonts/RubikBubbles-Regular.ttf"))
+	{
+		std::cout << "!ERROR::SETTINGS::SETTINGS::Nie udalo sie wczytac czcionki" << std::endl;
+	}
+
+	if (!backgroundTexture.loadFromFile("Textures/menu_background_1.jpg"))
+		std::cout << "!ERROR::SETTINGS::SETTINGS::Nie mozna zaladowac tla" << std::endl;
+
+	background.setTexture(backgroundTexture);
+
+	initControls();
+
+	initSettingsUI(width, height);
 
 	mainMenuSelected = 0;
 }

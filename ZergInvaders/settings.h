@@ -51,6 +51,9 @@ private:
 	//Inicjalizacja sterowania
 	void initControls();
 
+	//Inicjalizacja UI
+	void initSettingsUI(float width, float height);
+
 	//Zamiana sf::Keyboard::Key na std::string
 	std::string keyToString(sf::Keyboard::Key key);
 
