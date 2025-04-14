@@ -10,9 +10,10 @@ Zerg Invaders is a 2D space shooter game inspired by the classic *Space Invaders
 
 - **Controls**: Move left and right, shoot to eliminate enemies. Controls can be customized via presets.
 - **Enemies**:
-  - **Overlord** – unarmed enemy
-  - **Guardian** – shoots toxic plasma
-  - **Broodlord** – realeases scourge
+  - **Overlord** – flyer that provides control for lesser minions, can't attack
+  - **Guardian** – long-range bomber that attacks by lobbing explosive globs of acid
+  - **Broodlord** – massive manta-like flying creature that rapidly spawns large batches of scourge
+  - **Queen** - support unit, increases speed of other zerg units
 - **Progression**: Each level contains 40 enemies. Defeating all advances the player to a harder stage.
 - **Lives**: Players start with 3 lives, which regenerate at the beginning of each new level.
 - **Scoring**: Points are awarded for killing enemies. When the player loses all lives, the score is saved and encrypted.
