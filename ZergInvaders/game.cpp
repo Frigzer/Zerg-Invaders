@@ -79,9 +79,9 @@ void Game::initAudio(float width, float height)
 	queenDeath.setBuffer(queenDeathBuffer);
 	queenDeath.setVolume(40);
 
-	projectileBuffer.loadFromFile("Sound/shot.wav");
+	projectileBuffer.loadFromFile("Sound/blaster.wav");
 	projectileSound.setBuffer(projectileBuffer);
-	projectileSound.setVolume(20);
+	projectileSound.setVolume(80);
 
 	terran1.loadFromFile("Music/terran_1.wav");
 	backgrundMusic.setBuffer(terran1);
@@ -102,11 +102,15 @@ void Game::initTextures(float width, float height)
 	textures["broodlordBullet"] = new sf::Texture();
 	textures["broodlordBullet"]->loadFromFile("Textures/zerg_scourge_1.png");
 
-	bloodTexture.loadFromFile("Textures/zerg_death.png");
-	zergBloodSplash.setTexture(bloodTexture);
-	zergBloodSplash.setScale(0.1f, 0.1f);
+	zergDamagedTexture.loadFromFile("Textures/zerg_damaged.png");
+	zergDamagedImage.setTexture(zergDamagedTexture);
+	zergDamagedImage.setScale(0.1f, 0.1f);
 
-	playerDeathTexture.loadFromFile("Textures/explosion.png");
+	zergDeathTexture.loadFromFile("Textures/zerg_death.png");
+	zergDeathImage.setTexture(zergDeathTexture);
+	zergDeathImage.setScale(0.1f, 0.1f);
+
+	playerDeathTexture.loadFromFile("Textures/player_death.png");
 	playerDeathImage.setTexture(playerDeathTexture);
 	playerDeathImage.setScale(0.2f, 0.2f);
 	
@@ -133,7 +137,8 @@ void Game::initPlayer(float width, float height)
 
 void Game::initEnemies(float width, float height)
 {
-	
+
+	zerg_damaged_animation = false;
 	death_animation = false;
 	enemy_deleted = false;
 	queen_defeated = false;
@@ -475,6 +480,9 @@ void Game::updateEnemies(float width, float height)
 
 void Game::updateCombat(float width, float height)
 {
+	//Zranienie przeciwnika
+	zerg_damaged_animation = false;
+
 	//Œmieræ przeciwnika
 	death_animation = false;
 	for (int i = 0; i < enemies.size(); ++i)
@@ -487,7 +495,7 @@ void Game::updateCombat(float width, float height)
 				enemies[i]->loseHp(1);
 				if (enemies[i]->getHp() <= 0)
 				{
-					zergBloodSplash.setPosition(enemies[i]->getEnemyPosition().x, enemies[i]->getEnemyPosition().y);
+					zergDeathImage.setPosition(enemies[i]->getEnemyPosition().x, enemies[i]->getEnemyPosition().y);
 					points += enemies[i]->getPoints();
 					difficulty += 0.5f;
 					zergDeath.play();
@@ -497,6 +505,11 @@ void Game::updateCombat(float width, float height)
 					enemy_deleted = true;
 					death_animation = true;
 
+				}
+				else
+				{
+					zergDamagedImage.setPosition(enemies[i]->getEnemyPosition().x, enemies[i]->getEnemyPosition().y);
+					zerg_damaged_animation = true;
 				}
 				delete playerBullets[j];
 				playerBullets.erase(playerBullets.begin() + j);	
@@ -528,7 +541,7 @@ void Game::updateCombat(float width, float height)
 	{
 		if (queen->getEnemyBounds().intersects(playerBullets[i]->getBounds()))
 		{
-			zergBloodSplash.setPosition(queen->getEnemyPosition().x, queen->getEnemyPosition().y);
+			zergDeathImage.setPosition(queen->getEnemyPosition().x, queen->getEnemyPosition().y);
 			points += queen->getPoints();
 			queenDeath.play();
 			delete queen;
@@ -628,15 +641,19 @@ void Game::render(sf::RenderWindow& target)
 
 	queen->render(&target);
 	if (queen_defeated)
-		target.draw(zergBloodSplash);
+		target.draw(zergDeathImage);
 
 	for (auto* enemy : enemies)
 	{
 		enemy->render(&target);
 	}
+	if (zerg_damaged_animation)
+	{
+		target.draw(zergDamagedImage);
+	}
 	if (death_animation)
 	{
-		target.draw(zergBloodSplash);
+		target.draw(zergDeathImage);
 	}
 
 	for (auto* bullet : playerBullets)
