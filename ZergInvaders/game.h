@@ -49,6 +49,9 @@ private:
 	//DŸwiêk pocisku
 	sf::Sound projectileSound;
 
+	//Czy animacja otrzymania obra¿eñ przeciwnika ma zostaæ odtworzona
+	bool zerg_damaged_animation;
+
 	//Czy animacja œmierci ma zostaæ odtworzona
 	bool death_animation;
 
@@ -58,17 +61,29 @@ private:
 	//Czy przeciwnik zosta³ usuniety z pamiêci
 	bool enemy_deleted;
 
+	//Tekstura przy zranieniu gracza
+	sf::Texture playerDamagedTexture;
+
+	//Sprite przy zranieniu gracza
+	sf::Sprite playerDamagedImage;
+
 	//Tekstura przy œmierci gracza
 	sf::Texture playerDeathTexture;
 
 	//Sprite przy œmierci gracza
 	sf::Sprite playerDeathImage;
 
+	//Tekstura przy zranieniu przeciwnika
+	sf::Texture zergDamagedTexture;
+
+	//Sprite przy zranieniu przeciwnika
+	sf::Sprite zergDamagedImage;
+
 	//Tekstura przy œmierci przeciwnika
-	sf::Texture bloodTexture;
+	sf::Texture zergDeathTexture;
 
 	//Sprite przy œmierci przeciwnika
-	sf::Sprite zergBloodSplash;
+	sf::Sprite zergDeathImage;
 
 	//Sprawdza czy jest koniec gry
 	bool gameOver;
