@@ -75,8 +75,8 @@ It can be used for local builds, especially on Windows without installing SFML s
  ┃ ┣ 📂Config/ – Keybindings (left, right, shoot)  
  ┃ ┣ 📂Fonts/ – Fonts used in the game menus/UI  
  ┃ ┣ 📂Leaderboard/ – Score file (`wyniki.txt`)  
- ┃ ┣ 📂Music/ – Background music (MP3/WAV)  
- ┃ ┣ 📂Sound/ – Sound effects (MP3/WAV)  
+ ┃ ┣ 📂Music/ – Background music (WAV)  
+ ┃ ┣ 📂Sound/ – Sound effects (WAV)  
  ┃ ┣ 📂Textures/ – All game sprites, backgrounds, icons, etc.  
  ┃ ┣ 📜main.cpp  
  ┃ ┣ 📜bullet.cpp / bullet.h  
