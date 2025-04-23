@@ -12,16 +12,40 @@ Thumbs.db
 *.idb
 *.log
 
-# === IDEs ===
-.vscode/
+# === VISUAL STUDIO ===
 *.sdf
 *.opensdf
 *.suo
 *.user
-*.vcxproj.*
+*.vcxproj.user
+*.VC.db
+*.ipch
+*.iobj
+*.ipdb
+*.tlog/
+*.lastbuildstate
+*.cache
+*.db
+*.log
+*.psess
+*.vsp
+*.vspx
+*.vspscc
+*.vssscc
+
+# === VS FOLDERS ===
+.vscode/
+.vs/
+Debug/
+Release/
+x64/Debug/
+x64/Release/
+
+# === CMAKE ===
 CMakeFiles/
 CMakeCache.txt
 build/
+cmake-build-*/
 
 # === USER DATA ===
 ZergInvaders/Leaderboard/wyniki.txt
