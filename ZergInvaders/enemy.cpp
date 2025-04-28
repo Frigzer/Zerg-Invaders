@@ -4,6 +4,10 @@
 
 void Enemy::initEnemy(int type, int stage)
 {
+	deathTimer = 0.f;
+
+	deathDuration = 0.4f;
+
 	if(type >= 80 && type<100)
 	{
 		movementSpeed = 1.f;
@@ -138,7 +142,10 @@ void Enemy::loseHp(int damage)
 {
 	hp -= damage;
 	if (hp <= 0)
+	{
 		hp = 0;
+		isDead = true;
+	}	
 }
 
 void Enemy::setEnemyTexture(sf::Texture texture)
@@ -166,10 +173,28 @@ bool Enemy::canAttack()
 	return false;
 }
 
+bool Enemy::isAlive()
+{
+	return !isDead;
+}
+
 void Enemy::updateAttack()
 {
 	if (attackCooldown < attackCooldownMax)
 		attackCooldown += 0.5f;
+}
+
+void Enemy::updateDeathAnimation()
+{
+	if (isDead)
+	{
+		deathTimer += 0.5f;
+		if (deathTimer >= deathDuration)
+		{
+			isDead = false;
+			deathTimer = 0;
+		}
+	}
 }
 
 int& Enemy::getPoints()
@@ -180,6 +205,7 @@ int& Enemy::getPoints()
 void Enemy::update()
 {
 	updateAttack();
+	updateDeathAnimation();
 }
 
 void Enemy::render(sf::RenderTarget* target)
