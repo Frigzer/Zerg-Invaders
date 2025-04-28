@@ -33,6 +33,15 @@ private:
 	//Typ przeciwnika który bêdzie zwracany
 	int enemyType;
 
+	//Czy martwy
+	bool isDead = false;
+
+	//Licznik œmierci
+	float deathTimer;
+
+	//Czas ile trwa animacja œmierci
+	float deathDuration;
+
 	//Przeciwnik
 	sf::Sprite enemy;
 
@@ -88,8 +97,14 @@ public:
 	//Czy przeciwnik mo¿e atakowaæ
 	bool canAttack();
 
+	//Czy przeciwnik jest ¿ywy
+	bool isAlive();
+
 	//Aktualizuje czas ataku
 	void updateAttack();
+
+	//Aktualizuje animacjê œmierci
+	void updateDeathAnimation();
 
 	//Daje punkty
 	int& getPoints();
